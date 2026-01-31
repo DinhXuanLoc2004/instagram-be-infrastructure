@@ -1,10 +1,10 @@
 name: instagram-back-end-dev
 
 include:
+  # services
   - ../../auth-service/compose.yaml
-  - ../../post-service/compose.yaml
-  - ../../config-server/compose.yaml
-  - ../../discovery-service/compose.yaml
-  - ../../gateway-server/compose.yaml
   - ../../monitor-service/compose.yaml
+
+  # infra 
   - ../../vault/compose.yaml
+  - ../kafka/compose.yml
