@@ -1,5 +1,5 @@
 group "default" {
-    targets = [ "auth-service", "post-service" ]
+    targets = [ "auth-service" ]
 }
 
 variable "TARGET" {
@@ -31,7 +31,7 @@ variable "RUNTIME_FINAL" {
     default = "jre"
 }
 
-target "args_configuration" {
+target "java_args" {
     args = {
         IMAGE_BASE = IMAGE_BASE
         JAVA_VERSION = JAVA_VERSION
@@ -41,7 +41,7 @@ target "args_configuration" {
 }
 
 target "auth-service" {
-    inherits = [ "args_configuration" ]
+    inherits = [ "java_args" ]
     context = "../../auth-service"
     target = TARGET
     tags = [ "auth-service:${TAG}" ]
@@ -54,64 +54,8 @@ target "auth-service" {
     }
 }
 
-target "post-service" {
-    inherits = [ "args_configuration" ]
-    context = "../../post-service"
-    target = TARGET
-    tags = [ "post-service:${TAG}" ]
-    labels = {
-        "org.opencontainers.image.title" = "post-service"
-        "org.opencontainers.image.version" = TAG
-        "org.opencontainers.image.description" = "post service"
-        "org.opencontainers.image.source" = "https://github.com/DinhXuanLoc2004/instagram-be-post-service/tree/main"
-        "org.opencontainers.image.authors" = "dinhxuanloc2004"
-    }
-}
-
-target "config-server" {
-    inherits = [ "args_configuration" ]
-    context = "../../config-server"
-    target = TARGET
-    tags = [ "config-server:${TAG}" ]
-    labels = {
-        "org.opencontainers.image.title" = "config-server"
-        "org.opencontainers.image.version" = TAG
-        "org.opencontainers.image.description" = "config service"
-        "org.opencontainers.image.source" = "https://github.com/DinhXuanLoc2004/instagram-be-config-server/tree/main"
-        "org.opencontainers.image.authors" = "dinhxuanloc2004"
-    }
-}
-
-target "discovery-service" {
-    inherits = [ "args_configuration" ]
-    context = "../../discovery-service"
-    target = TARGET
-    tags = [ "discovery-service:${TAG}" ]
-    labels = {
-        "org.opencontainers.image.title" = "discovery-service"
-        "org.opencontainers.image.version" = TAG
-        "org.opencontainers.image.description" = "discovery service"
-        "org.opencontainers.image.source" = "https://github.com/DinhXuanLoc2004/instagram-be-discovery-service/tree/main"
-        "org.opencontainers.image.authors" = "dinhxuanloc2004"
-    }
-}
-
-target "gateway-server" {
-    inherits = [ "args_configuration" ]
-    context = "../../gateway-server"
-    target = TARGET
-    tags = [ "gateway-server:${TAG}" ]
-    labels = {
-        "org.opencontainers.image.title" = "gateway-server"
-        "org.opencontainers.image.version" = TAG
-        "org.opencontainers.image.description" = "gateway server"
-        "org.opencontainers.image.source" = "https://github.com/DinhXuanLoc2004/instagram-be-gateway-server/tree/main"
-        "org.opencontainers.image.authors" = "dinhxuanloc2004"
-    }
-}
-
 target "monitor-service" {
-    inherits = [ "args_configuration" ]
+    inherits = [ "java_args" ]
     context = "../../monitor-service"
     target = TARGET
     tags = [ "monitor-service:${TAG}" ]
@@ -123,5 +67,20 @@ target "monitor-service" {
         "org.opencontainers.image.authors" = "dinhxuanloc2004"
     }
 }
+
+target "media-service" {
+    context = "../../media-service"
+    dockerfile = "Dockerfile.prod"
+    target = TARGET
+    tags = [ "media-service:${TAG}" ]
+    labels = {
+        "org.opencontainers.image.title" = "media-service"
+        "org.opencontainers.image.version" = TAG
+        "org.opencontainers.image.description" = "media service"
+        "org.opencontainers.image.source" = "https://github.com/DinhXuanLoc2004/instagram-be-media-service/tree/main"
+        "org.opencontainers.image.authors" = "dinhxuanloc2004"
+    }
+}
+
 
 
